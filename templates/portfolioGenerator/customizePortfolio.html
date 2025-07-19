@@ -7,8 +7,9 @@
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <!-- Styles -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+
   <style>
     * {
       margin: 0;
@@ -40,15 +41,16 @@
       margin: 15px 0 5px;
     }
 
-    .sidebar input, .sidebar select {
+    .sidebar input, .sidebar select, .sidebar textarea {
       width: 100%;
       padding: 6px;
       border-radius: 5px;
       border: none;
+      font-size: 14px;
     }
 
     .sidebar button {
-      margin-top: 20px;
+      margin-top: 15px;
       width: 100%;
       padding: 10px;
       background-color: #1e90ff;
@@ -84,20 +86,19 @@
       background: white;
       border: 1px solid #ccc;
       padding: 20px;
-      overflow-x: none;
       overflow: auto;
       border-radius: 8px;
       display: none;
     }
 
     #preview.active, #code.active {
-      display: block;      
-      overflow-x: none;
+      display: block;
     }
 
     .action-buttons {
       margin-top: 20px;
       display: flex;
+      flex-direction: column;
       gap: 10px;
     }
 
@@ -109,94 +110,166 @@
       border-radius: 6px;
       cursor: pointer;
     }
+
+    #aiInputContainer {
+      margin-top: 10px;
+      display: none;
+    }
+
+    #loading {
+      margin-top: 20px;
+      display: none;
+      text-align: center;
+    }
+
+    .spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #1e90ff;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      margin: auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
   </style>
 </head>
 <body>
 
   <!-- Sidebar -->
   <div class="sidebar">
-    <h2><i class="fas fa-sliders-h"></i> Customize</h2>
+    
+    <button onclick="showAIEnhancer()"><i class="fas fa-magic"></i> Customize with AI</button>
 
-    <label for="themeColor"><i class="fas fa-palette"></i> Theme Color</label>
-    <input type="color" id="themeColor" value="#0a3d62">
+    <div id="aiInputContainer">
+      <label for="aiInput">Enter your idea or instruction:</label>
+      <textarea id="aiInput" rows="3" placeholder="E.g., Create a modern portfolio with project section..."></textarea>
+      <button onclick="generateAIContent()">Customize</button>
+    </div>
 
-    <label for="fontSize"><i class="fas fa-text-height"></i> Font Size</label>
-    <select id="fontSize">
-      <option value="14px">Small</option>
-      <option value="16px" selected>Medium</option>
-      <option value="18px">Large</option>
-    </select>
+    <div id="loading" style="display: none;">
+    <div class="spinner"></div>
+    <p>Generating with AI...</p>
+  </div>
 
-    <label for="htmlUpload"><i class="fas fa-file-code"></i> Upload HTML File</label>
-    <input type="file" id="htmlUpload" accept=".html">
-
-    <button onclick="generateAIContent()"><i class="fas fa-magic"></i> Enhance with AI</button>
+    <div class="action-buttons">
+    <button onclick="copyCode()"><i class="fas fa-copy"></i> Copy Code</button>
+    <button onclick="downloadPDF()"><i class="fas fa-download"></i> Download as PDF</button>
+    <button onclick="downloadHTML()"><i class="fas fa-download"></i> Download HTML file</button>
+  </div>
   </div>
 
   <!-- Main Content -->
-  <div class="main">
-    <div class="toggle-buttons">
-      <button onclick="toggleView('preview')"><i class="fas fa-eye"></i> Preview</button>
-      <button onclick="toggleView('code')"><i class="fas fa-code"></i> Code</button>
-    </div>
-
-    <div id="preview" class="active">
-      <p>Preview will appear here...</p>
-    </div>
-
-    <div id="code">
-      <textarea id="codeArea" style="width:100%; height:100%; border:none; outline:none; font-family: monospace;"></textarea>
-    </div>
-
-    <div class="action-buttons">
-      <button onclick="copyCode()"><i class="fas fa-copy"></i> Copy Code</button>
-      <button onclick="downloadPDF()"><i class="fas fa-download"></i> Download as PDF</button>
-      <button onclick="downloadHTML()"><i class="fas fa-download"></i> Download HTML file</button>
-    </div>
+ <div class="main">
+  <div class="toggle-buttons">
+    <button onclick="toggleView('preview')"><i class="fas fa-eye"></i> Preview</button>
+    <button onclick="toggleView('code')"><i class="fas fa-code"></i> Code</button>
   </div>
 
-  <!-- Scripts -->
-  <script>
-    function toggleView(view) {
-      document.getElementById("preview").classList.remove("active");
-      document.getElementById("code").classList.remove("active");
-      document.getElementById(view).classList.add("active");
-    }
+  <div id="preview" class="active">
+    {% if rendered_html %}
+      {{ rendered_html | safe }}
+    {% else %}
+      <p>Preview will appear here...</p>
+    {% endif %}
+  </div>
 
-    document.getElementById("htmlUpload").addEventListener("change", function () {
-      const file = this.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-          const html = e.target.result;
-          document.getElementById("preview").innerHTML = html;
-          document.getElementById("codeArea").value = html;
-        };
-        reader.readAsText(file);
+  <div id="code">
+    <textarea id="codeArea" style="width:100%; height:100%; border:none; outline:none; font-family: monospace;">{{ rendered_html | e }}</textarea>
+  </div>
+
+  
+
+  
+</div>
+
+<!-- Scripts -->
+<script>
+  function toggleView(view) {
+    document.getElementById("preview").classList.remove("active");
+    document.getElementById("code").classList.remove("active");
+    document.getElementById(view).classList.add("active");
+  }
+
+  function showAIEnhancer() {
+    document.getElementById("aiInputContainer").style.display = "block";
+  }
+
+    async function generateAIContent() {    
+    document.getElementById("loading").style.display = "block";
+    const userInput = document.getElementById("aiInput").value.trim();
+    const currentCode = document.getElementById("codeArea").value;
+
+    if (!userInput) return alert("Please enter instructions for AI.");
+
+    document.getElementById("preview").innerHTML = "";
+
+    try {
+      const response = await fetch("/generate_with_ai", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          instruction: userInput,
+          code: currentCode
+        })
+      });
+
+      const data = await response.json();
+
+      if (data.updated_code) {
+        document.getElementById("preview").innerHTML = data.updated_code;
+        document.getElementById("codeArea").value = data.updated_code;
+      } else {
+        alert("AI did not return updated code.");
       }
-    });
-
-    document.getElementById("themeColor").addEventListener("input", function () {
-      document.getElementById("preview").style.color = this.value;
-    });
-
-    document.getElementById("fontSize").addEventListener("change", function () {
-      document.getElementById("preview").style.fontSize = this.value;
-    });
-
-    function copyCode() {
-      const code = document.getElementById("codeArea").value;
-      navigator.clipboard.writeText(code);
-      alert("Code copied to clipboard!");
+    } catch (error) {
+      console.error("Error calling AI endpoint:", error);
+      alert("An error occurred while contacting AI.");
     }
 
-    function downloadPDF() {
-      alert("PDF generation coming soon (you can use `html2pdf.js` here).");
-    }
+    document.getElementById("loading").style.display = "none";
+  }
+  
+  function copyCode() {
+    const code = document.getElementById("codeArea").value;
+    navigator.clipboard.writeText(code);
+    alert("Code copied to clipboard!");
+  }
 
-    function generateAIContent() {
-      alert("AI integration placeholder (can call your Flask AI route here).");
-    }
-  </script>
-</body>
-</html>
+  function downloadPDF() {
+  const element = document.getElementById("preview");
+
+  if (!element || !element.innerHTML.trim()) {
+    alert("No content to download as PDF.");
+    return;
+  }
+
+  const opt = {
+    margin:       0.5,
+    filename:     'portfolio.pdf',
+    image:        { type: 'jpeg', quality: 0.98 },
+    html2canvas:  { scale: 2 },
+    jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' },
+    pagebreak:    { mode: ['css', 'legacy'] }
+    };
+
+  html2pdf().from(element).set(opt).save();
+}
+
+
+  function downloadHTML() {
+    const html = document.getElementById("codeArea").value;
+    const blob = new Blob([html], { type: "text/html" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "portfolio.html";
+    a.click();
+  }
+</script>
+</body></html>

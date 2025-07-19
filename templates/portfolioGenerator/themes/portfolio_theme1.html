@@ -5,84 +5,149 @@
   <title>{{ name }}'s Portfolio</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      background: #f9f9f9;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #f2f4f7, #e0e7ff);
+      color: #333;
     }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
     .profile-img {
-      width: 150px;
+      width: 130px;
+      height: 130px;
       border-radius: 50%;
+      border: 4px solid #6c63ff;
+      object-fit: cover;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
+
+    h1 {
+      margin: 15px 0 5px;
+      font-size: 32px;
+      color: #2f2f2f;
+    }
+
+    h2 {
+      font-size: 18px;
+      color: #666;
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
     .section {
+      background: white;
       margin-top: 30px;
-      padding: 10px 0;
-      border-top: 1px solid #ccc;
+      padding: 25px 30px;
+      border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
     }
+
+    .section h3 {
+      margin-top: 0;
+      font-size: 22px;
+      color: #6c63ff;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 8px;
+    }
+
     ul {
-      list-style-type: none;
-      padding-left: 0;
+      padding-left: 20px;
     }
+
     li {
       margin-bottom: 10px;
     }
+
     .project {
       margin-bottom: 20px;
     }
-    h3 {
-      color: #333;
+
+    a {
+      color: #6c63ff;
+      text-decoration: none;
     }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 14px;
+      margin-top: 50px;
+      color: #777;
+    }
+
   </style>
 </head>
 <body>
 
-  <h1>{{ name }}</h1>
-  <img src="{{ profileImageUrl }}" alt="{{ name }}'s profile photo" class="profile-img" onerror="this.style.display='none';">
-  <h2>{{ title }}</h2>
-  <p>{{ about }}</p>
+  <div class="container">
+    <div class="header">
+      <img src="{{ profileImageUrl }}" alt="{{ name }}'s photo" class="profile-img" onerror="this.style.display='none';">
+      <h1>{{ name }}</h1>
+      <h2>{{ title }}</h2>
+    </div>
 
-  <!-- Skills Section -->
-  <div class="section">
-    <h3>Skills</h3>
-    <ul>
-      {% for skill in skills %}
-        <li>{{ skill }}</li>
+    <p>{{ about }}</p>
+
+    <!-- Skills Section -->
+    <div class="section">
+      <h3>Skills</h3>
+      <ul>
+        {% for skill in skills %}
+          <li>{{ skill }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <!-- Projects Section -->
+    <div class="section">
+      <h3>Projects</h3>
+      {% for project in projects %}
+        <div class="project">
+          <strong>{{ project.title }}</strong><br>
+          <p>{{ project.description }}</p>
+          {% if project.live %}
+            <a href="{{ project.live }}" target="_blank">🌐 Live Demo</a>
+          {% endif %}
+          {% if project.code %}
+            {% if project.live %} | {% endif %}
+            <a href="{{ project.code }}" target="_blank">💻 Source Code</a>
+          {% endif %}
+        </div>
       {% endfor %}
-    </ul>
-  </div>
+    </div>
 
-  <!-- Projects Section -->
-  <div class="section">
-    <h3>Projects</h3>
-    {% for project in projects %}
-      <div class="project">
-        <strong>{{ project.title }}</strong><br>
-        <p>{{ project.description }}</p>
-        {% if project.live %}
-          <a href="{{ project.live }}" target="_blank">🌐 Live Demo</a>
-        {% endif %}
-        {% if project.code %}
-          {% if project.live %} | {% endif %}
-          <a href="{{ project.code }}" target="_blank">💻 Source Code</a>
-        {% endif %}
-      </div>
-    {% endfor %}
-  </div>
+    <!-- Courses Section -->
+    <div class="section">
+      <h3>Courses</h3>
+      <ul>
+        {% for course in courses %}
+          <li>{{ course }}</li>
+        {% endfor %}
+      </ul>
+    </div>
 
-  <!-- Courses Section -->
-  <div class="section">
-    <h3>Courses</h3>
-    <ul>
-      {% for course in courses %}
-        <li>{{ course }}</li>
-      {% endfor %}
-    </ul>
-  </div>
-
-  <!-- Footer -->
-  <div class="section">
-    <p>Email: {{ email }}</p>
-    <p>Phone: {{ phone }}</p>
-    <p>&copy; {{ year }}</p>
+    <!-- Footer -->
+    <div class="footer">
+      <p>📧 {{ email }} | 📱 {{ phone }}</p>
+      <p>&copy; {{ year }} {{ name }}</p>
+    </div>
   </div>
 
 </body>
