@@ -158,7 +158,6 @@
 
     <div class="action-buttons">
     <button onclick="copyCode()"><i class="fas fa-copy"></i> Copy Code</button>
-    <button onclick="downloadPDF()"><i class="fas fa-download"></i> Download as PDF</button>
     <button onclick="downloadHTML()"><i class="fas fa-download"></i> Download HTML file</button>
   </div>
   </div>
@@ -242,25 +241,6 @@
     alert("Code copied to clipboard!");
   }
 
-  function downloadPDF() {
-  const element = document.getElementById("preview");
-
-  if (!element || !element.innerHTML.trim()) {
-    alert("No content to download as PDF.");
-    return;
-  }
-
-  const opt = {
-    margin:       0.5,
-    filename:     'portfolio.pdf',
-    image:        { type: 'jpeg', quality: 0.98 },
-    html2canvas:  { scale: 2 },
-    jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' },
-    pagebreak:    { mode: ['css', 'legacy'] }
-    };
-
-  html2pdf().from(element).set(opt).save();
-}
 
 
   function downloadHTML() {
