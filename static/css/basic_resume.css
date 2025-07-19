@@ -1,0 +1,61 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  background: #f8f8f8;
+  margin: 0;
+  padding: 20px;
+}
+
+.resume {
+  display: flex;
+  max-width: 900px;
+  margin: auto;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+.left-column, .right-column {
+  padding: 30px;
+  width: 50%;
+}
+
+.profile-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto 20px auto;
+}
+
+h1 {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+h2 {
+  margin-top: 25px;
+  color: #2c3e50;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 4px;
+}
+
+ul {
+  padding-left: 20px;
+}
+
+.section {
+  margin-top: 20px;
+}
+
+.btn {
+  padding: 10px 20px;
+  background-color: #3b3b98;
+  color: #fff;
+  border: none;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+}

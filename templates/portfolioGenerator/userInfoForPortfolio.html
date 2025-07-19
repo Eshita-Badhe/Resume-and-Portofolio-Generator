@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume & Portfolio Generator</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f8fc;
+      color: #333;
+    }
+    header {
+      background: #0a3d62;
+      color: #fff;
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      margin: 0;
+    }
+    section {
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    form {
+      max-width: 800px;
+      margin: auto;
+      text-align: left;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    form label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+    form input, form textarea, form select {
+      width: 95%;
+      padding: 0.8rem;
+      margin-top: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    .ai-suggest, .add-btn {
+      font-size: 0.9rem;
+      color: #0077ff;
+      background: #e1efff;
+      padding: 6px 10px;
+      border-radius: 6px;
+      margin-top: 0.5rem;
+      display: inline-block;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .ai-suggest:hover {
+      background: #cce6ff;
+    }
+    .submit-btn {
+      background: #0a3d62;
+      color: white;
+      padding: 1rem 2rem;
+      margin-top: 2rem;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .submit-btn:hover {
+      background: #1e5799;
+    }
+    .skill-badge {
+      display: inline-block;
+      background: #0a3d62;
+      color: #fff;
+      padding: 5px 10px;
+      margin: 5px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .dynamic-card {
+      margin-bottom: 1rem;
+    }
+    .floating-box {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 1rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+      z-index: 1000;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 500px;
+    }
+    .floating-box textarea {
+      width: 95%;
+      height: 100px;
+      border: #333;
+      border-radius: 10px;
+    }
+    .ai-output {
+      background: #f0f8ff;
+      padding: 10px;
+      border-radius: 6px;
+      margin-top: 10px;
+    }
+    #overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+      display: none;
+    }
+
+    #aiOutput i.fa-spinner {
+  font-size: 1.2rem;
+  color: #0077ff;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+  </style>
+</head>
+<body>
+  <header>
+    <h1>ProResume+</h1>
+  </header>
+
+  <section id="portfolioForm">
+    <h2>Portfolio Information</h2>
+    <form method="POST" action="/getUserDetailsForPortfolio"  enctype="multipart/form-data">
+      <label for="imageUpload">Upload Your Image</label>
+      <input type="file" id="imageUpload" name="imageUpload" accept="image/*">
+
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="phone">Phone Number (Optional)</label>
+      <input type="tel" id="phone" name="phone">
+
+      <label for="bio">Short Bio</label>
+      <textarea id="bio" name="bio" rows="4"></textarea>
+      <span class="ai-suggest" onclick="showAIPrompt('bio')"><i class="fa-solid fa-wand-magic-sparkles"></i> Use AI to generate bio</span>
+
+      <label for="skills">Skills</label>
+      <div id="skill-suggestions">
+        <span class="skill-badge" onclick="addSkill('Communication')">+ Communication</span>
+        <span class="skill-badge" onclick="addSkill('Project-Manager')">+ Project Manager</span>
+      </div>
+      <input type="text" id="custom-skill" placeholder="Type a skill and press Enter">
+      <div id="skill-tags"></div>
+
+      <label>Certificates</label>
+      <div id="certificates-section"></div>
+      <button type="button" class="add-btn" onclick="addSection('certificates-section', 'certificate')">+ Add Certificate</button>
+
+      <label>Projects</label>
+      <div id="projects-section"></div>
+      <button type="button" class="add-btn" onclick="addSection('projects-section', 'project')">+ Add Project</button>
+
+      <label>Work Experience</label>
+      <div id="experience-section"></div>
+      <button type="button" class="add-btn" onclick="addSection('experience-section', 'experience')">+ Add Experience</button>
+
+      <label>Education</label>
+      <div id="education-section"></div>
+      <button type="button" class="add-btn" onclick="addSection('education-section', 'education')">+ Add Education</button>
+
+      <label for="personal">Personal Thoughts / Message</label>
+      <textarea id="personal" name="personal" rows="3" placeholder="Write anything you want to share..."></textarea>
+
+      <label>Social Profiles</label>
+      <input type="url" name="linkedin" placeholder="LinkedIn URL">
+      <input type="url" name="github" placeholder="GitHub URL">
+      <div id="more-socials"></div>
+      <button type="button" class="add-btn" onclick="addSocialField()">+ Add Social Site</button>
+<br><br>
+      <button type="submit" class="submit-btn">Generate Portfolio</button>
+    </form>
+  </section>
+
+  <div id="overlay">
+    <div class="floating-box">
+      <h3>Improve with AI</h3>
+      <textarea id="aiInput" placeholder="Describe your content..."></textarea>
+      <button onclick="callAI()" class="add-btn">Get Suggestions</button>
+      <div id="aiOutput" class="ai-output"></div>
+
+      <button onclick="applyAIText()" class="add-btn">✅ Add</button>
+      <button onclick="closeAI()" class="add-btn"><i class="fa-solid fa-xmark"></i> Cancel</button>
+    </div>
+  </div>
+
+  
+<script>
+let currentField = null;
+
+function showAIPrompt(fieldId) {
+  currentField = document.getElementById(fieldId);
+  document.getElementById('aiInput').value = currentField.value || '';
+  document.getElementById('aiOutput').innerHTML = '';
+  document.getElementById('overlay').style.display = 'block';
+}
+
+function closeAI() {
+  document.getElementById('overlay').style.display = 'none';
+}
+
+function callAI() {
+  const userInput = document.getElementById('aiInput').value;
+  document.getElementById('aiOutput').innerHTML = `<i class="fa fa-spinner fa-spin"></i> Generating...`;
+
+  const prompt = `Improve and rewrite the following text professionally and clearly in not more than 100 words. Provide it in well-structured English:\n\n${userInput}\n\ngive only the generated text`;
+
+  fetch('/generate-ai-text', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ prompt })
+  })
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById('aiOutput').innerText = data.response || "⚠️ Error: No response from AI.";
+  })
+  .catch(err => {
+    document.getElementById('aiOutput').innerText = "⚠️ Error contacting AI.";
+    console.error(err);
+  });
+}
+
+function applyAIText() {
+  const aiText = document.getElementById('aiOutput').innerText;
+  if (currentField) currentField.value = aiText;
+  closeAI();
+}
+
+function addSection(containerId, type) {
+  const container = document.getElementById(containerId);
+  const div = document.createElement('div');
+  div.className = 'dynamic-card';
+
+  if (type === 'project') {
+    div.innerHTML = `
+      <span class="remove-section" onclick="this.parentElement.remove()" style="cursor:pointer;color:red;"><i class="fa-solid fa-xmark"></i> Remove</span>
+      
+      <input type="text" name="project_title[]" placeholder="Project Title" required>
+      <textarea name="project_desc[]" rows="2" placeholder="Project Description" required></textarea>
+      <input type="url" name="project_live[]" placeholder="Live Link (optional)">
+      <input type="url" name="project_code[]" placeholder="Code Link (e.g., GitHub)">
+    `;
+  } else {
+    const id = `${type}-${Date.now()}`;
+    div.innerHTML = `
+      <span class="remove-section" onclick="this.parentElement.remove()" style="cursor:pointer;color:red;"><i class="fa-solid fa-xmark"></i> Remove</span>
+      <textarea id="${id}" name="${type}[]" rows="3" placeholder="Enter ${type} details..."></textarea>
+    `;
+  }
+
+  container.appendChild(div);
+}
+
+function addSocialField() {
+  const container = document.getElementById("more-socials");
+  const div = document.createElement("div");
+  div.innerHTML = `
+    <span class="remove-section" onclick="this.parentElement.remove()" style="cursor:pointer;color:red;font-weight:bold;margin-left:10px;"><i class="fa-solid fa-xmark"></i></span>
+    <input type="text" name="social[]" placeholder="Site Name">
+    <input type="url" name="social[]" placeholder="Site URL">`;
+  container.appendChild(div);
+}
+
+function addSkill(skill) {
+  const span = document.createElement("span");
+  span.className = "skill-badge";
+  span.innerHTML = `<i class="fa-solid fa-xmark"></i> ${skill}`;
+  span.onclick = () => span.remove();
+
+  const input = document.createElement("input");
+  input.type = "hidden";
+  input.name = "skills[]";
+  input.value = skill;
+  span.appendChild(input);
+
+  document.getElementById("skill-tags").appendChild(span);
+}
+
+const skillInput = document.getElementById("custom-skill");
+
+skillInput.addEventListener("keypress", function (e) {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    const skill = skillInput.value.trim();
+    if (skill) {
+      addSkill(skill);
+      skillInput.value = "";
+    }
+  }
+});
+
+
+</script>
+
+
+</body>
+</html>

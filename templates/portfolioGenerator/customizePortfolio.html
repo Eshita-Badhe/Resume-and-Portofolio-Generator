@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Customize & Finalize Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Styles -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      display: flex;
+      height: 100vh;
+      background-color: #f4f6fc;
+    }
+
+    .sidebar {
+      width: 280px;
+      background-color: #0a3d62;
+      color: white;
+      padding: 20px;
+    }
+
+    .sidebar h2 {
+      margin-bottom: 20px;
+      font-size: 22px;
+    }
+
+    .sidebar label {
+      display: block;
+      margin: 15px 0 5px;
+    }
+
+    .sidebar input, .sidebar select {
+      width: 100%;
+      padding: 6px;
+      border-radius: 5px;
+      border: none;
+    }
+
+    .sidebar button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 10px;
+      background-color: #1e90ff;
+      border: none;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .main {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .toggle-buttons {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .toggle-buttons button {
+      padding: 10px 15px;
+      background: #0a3d62;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    #preview, #code {
+      width: 100%;
+      height: 70vh;
+      background: white;
+      border: 1px solid #ccc;
+      padding: 20px;
+      overflow-x: none;
+      overflow: auto;
+      border-radius: 8px;
+      display: none;
+    }
+
+    #preview.active, #code.active {
+      display: block;      
+      overflow-x: none;
+    }
+
+    .action-buttons {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .action-buttons button {
+      padding: 10px 15px;
+      background: #1abc9c;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2><i class="fas fa-sliders-h"></i> Customize</h2>
+
+    <label for="themeColor"><i class="fas fa-palette"></i> Theme Color</label>
+    <input type="color" id="themeColor" value="#0a3d62">
+
+    <label for="fontSize"><i class="fas fa-text-height"></i> Font Size</label>
+    <select id="fontSize">
+      <option value="14px">Small</option>
+      <option value="16px" selected>Medium</option>
+      <option value="18px">Large</option>
+    </select>
+
+    <label for="htmlUpload"><i class="fas fa-file-code"></i> Upload HTML File</label>
+    <input type="file" id="htmlUpload" accept=".html">
+
+    <button onclick="generateAIContent()"><i class="fas fa-magic"></i> Enhance with AI</button>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main">
+    <div class="toggle-buttons">
+      <button onclick="toggleView('preview')"><i class="fas fa-eye"></i> Preview</button>
+      <button onclick="toggleView('code')"><i class="fas fa-code"></i> Code</button>
+    </div>
+
+    <div id="preview" class="active">
+      <p>Preview will appear here...</p>
+    </div>
+
+    <div id="code">
+      <textarea id="codeArea" style="width:100%; height:100%; border:none; outline:none; font-family: monospace;"></textarea>
+    </div>
+
+    <div class="action-buttons">
+      <button onclick="copyCode()"><i class="fas fa-copy"></i> Copy Code</button>
+      <button onclick="downloadPDF()"><i class="fas fa-download"></i> Download as PDF</button>
+      <button onclick="downloadHTML()"><i class="fas fa-download"></i> Download HTML file</button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    function toggleView(view) {
+      document.getElementById("preview").classList.remove("active");
+      document.getElementById("code").classList.remove("active");
+      document.getElementById(view).classList.add("active");
+    }
+
+    document.getElementById("htmlUpload").addEventListener("change", function () {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const html = e.target.result;
+          document.getElementById("preview").innerHTML = html;
+          document.getElementById("codeArea").value = html;
+        };
+        reader.readAsText(file);
+      }
+    });
+
+    document.getElementById("themeColor").addEventListener("input", function () {
+      document.getElementById("preview").style.color = this.value;
+    });
+
+    document.getElementById("fontSize").addEventListener("change", function () {
+      document.getElementById("preview").style.fontSize = this.value;
+    });
+
+    function copyCode() {
+      const code = document.getElementById("codeArea").value;
+      navigator.clipboard.writeText(code);
+      alert("Code copied to clipboard!");
+    }
+
+    function downloadPDF() {
+      alert("PDF generation coming soon (you can use `html2pdf.js` here).");
+    }
+
+    function generateAIContent() {
+      alert("AI integration placeholder (can call your Flask AI route here).");
+    }
+  </script>
+</body>
+</html>

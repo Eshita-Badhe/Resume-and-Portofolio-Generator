@@ -1,0 +1,120 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: #f0f0f0;
+  padding: 40px;
+}
+
+.resume {
+   display: flex;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-bottom: 50px;
+}
+
+/* LEFT PANEL */
+.left {
+  width: 35%;
+  background: #f59e0b;
+  color: #fff;
+  padding: 50px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.name-box h1 {
+  font-size: 34px;
+  line-height: 1;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.name-box span {
+  font-weight: 400;
+}
+
+.name-box h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.contact-box {
+  margin: 30px 0;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.section {
+  margin-bottom: 35px;
+}
+
+.section h2 {
+  font-size: 14px;
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+  border-bottom: 1px solid #fff;
+  padding-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.section p {
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+/* RIGHT PANEL */
+.right {
+  width: 65%;
+  padding: 50px;
+  position: relative;
+}
+
+.profile-img {
+  text-align: right;
+  margin-bottom: 30px;
+}
+
+.profile-img img {
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 6px solid #f59e0b;
+  box-shadow: 0 0 0 4px #fff;
+}
+
+.section h2 {
+  color: #f59e0b;
+  font-size: 18px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.job {
+  margin-bottom: 30px;
+}
+
+.job-header {
+  font-size: 15px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.job ul {
+  padding-left: 20px;
+  list-style: none;
+}
+
+.job ul li {
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #555;
+}

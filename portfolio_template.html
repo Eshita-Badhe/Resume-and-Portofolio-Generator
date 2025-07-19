@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio Template with Photo</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      min-height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f2f5;
+      color: #333;
+    }
+
+    aside {
+      background: #111827;
+      color: white;
+      width: 280px;
+      padding: 2rem 1.5rem;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+
+    .profile-img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #64ffda;
+      margin-bottom: 1rem;
+    }
+
+    aside h1 {
+      font-size: 1.6rem;
+      color: #64ffda;
+      margin-bottom: 0.3rem;
+      text-align: center;
+    }
+
+    aside p {
+      font-size: 0.95rem;
+      color: #cbd5e1;
+      text-align: center;
+    }
+
+    .social {
+      margin-top: 1.2rem;
+    }
+
+    .social a {
+      display: inline-block;
+      margin: 0.3rem;
+      color: #64ffda;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    main {
+      flex-grow: 1;
+      padding: 2rem;
+    }
+
+    section {
+      margin-bottom: 3rem;
+    }
+
+    section h2 {
+      font-size: 1.8rem;
+      color: #0f172a;
+      border-bottom: 2px solid #64ffda;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+    }
+
+    .card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      margin-bottom: 1rem;
+    }
+
+    .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .skills-list span {
+      background: #e2f7f4;
+      color: #0f766e;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+    }
+
+    .project-links a {
+      margin-right: 1rem;
+      color: #0077cc;
+      font-size: 0.9rem;
+      text-decoration: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+
+      aside {
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 1rem;
+      }
+
+      .profile-img {
+        width: 60px;
+        height: 60px;
+        margin: 0;
+      }
+
+      aside h1, aside p {
+        font-size: 1rem;
+        margin: 0 0.5rem;
+      }
+
+      main {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <aside>
+    <img src="{{profileImageUrl}}" alt="Profile Image" width="150" height="150">
+    <div>
+      <h1>{{name}}</h1>
+      <p>{{title}}</p>
+    </div>
+    <div class="social">
+      <a href="{{linkedin}}">LinkedIn</a>
+      <a href="{{github}}">GitHub</a>
+    </div>
+  </aside>
+
+  <main>
+  
+    <section id="about">
+      <h2>About</h2>
+      <div class="card">
+        <p>{{about}}</p>
+      </div>
+    </section>
+
+    <section id="skills">
+      <h2>Skills</h2>
+      <div class="card skills-list">
+        <span>{{skill[0]}}</span>
+        <span>{{skill[1]}}</span>
+        <span>{{skill[2]}}</span>
+        <span>{{skill[3]}}</span>
+        <span>{{skill[4]}}</span>
+      </div>
+    </section>
+
+    <section id="projects">
+      <h2>Projects</h2>
+
+      <div class="card">
+        <h3>{{project1Title}}</h3>
+        <p>{{project1Description}}</p>
+        <div class="project-links">
+          <a href="{{project1Live}}">Live</a>
+          <a href="{{project1Code}}">Code</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>{{project2Title}}</h3>
+        <p>{{project2Description}}</p>
+        <div class="project-links">
+          <a href="{{project2Live}}">Live</a>
+          <a href="{{project2Code}}">Code</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <div class="card">
+        <p>Email: {{email}}</p>
+        <p>Phone: {{phone}}</p>
+      </div>
+    </section>
+
+    <footer>
+      © {{year}} {{name}}. All rights reserved.
+    </footer>
+  </main>
+
+</body>
+</html>

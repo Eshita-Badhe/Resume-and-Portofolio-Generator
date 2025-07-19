@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Choose Resume Type</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="{{ url_for('static', filename='js/resume_form.js') }}"></script>
+
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">ProResume+</div>
+  </nav>
+
+  <div class="container">
+    <h2 class="heading">Choose Your Resume Type</h2>
+    <div class="resume-type-grid">
+
+        <form action="{{ url_for('resume_template', template_name='basic_resume') }}" method="get">
+          <input type="hidden" name="template" value="academic">
+          <button class="resume-btn basic">Basic</button>
+        </form>
+        <form action="{{ url_for('resume_template', template_name='generated_creative_resume') }}" method="get">
+          <input type="hidden" name="template" value="academic">
+          <button class="resume-btn basic">Creative Sample</button>
+        </form>
+      <form action="{{ url_for('resume_template', template_name='academic') }}" method="get">
+          <button class="resume-btn academic">Academic</button>
+      </form>
+      <form action="{{ url_for('resume_template', template_name='corporate') }}" method="get">
+        <input type="hidden" name="template" value="corporate">
+        <button class="resume-btn corporate">Corporate</button>
+      </form>
+      <form action="{{ url_for('resume_template', template_name='creative') }}" method="get">
+        <input type="hidden" name="template" value="creative">
+        <button class="resume-btn creative">Creative</button>
+      </form>
+      <form action="{{ url_for('resume_template', template_name='government') }}" method="get">
+        <input type="hidden" name="template" value="government">
+        <button class="resume-btn government">Government</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

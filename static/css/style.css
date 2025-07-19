@@ -1,0 +1,241 @@
+
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  background-color: #f7faff;
+  color: #333;
+}
+
+.navbar {
+  background-color: #0d6efd;
+  padding: 1rem 2rem;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.heading {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #0d6efd;
+}
+
+.resume-type-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.2rem;
+}
+
+.resume-btn {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  background-color: #e0f0ff;
+  color: #0d6efd;
+  border: 2px solid #0d6efd;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.resume-btn:hover {
+  background-color: #0d6efd;
+  color: white;
+}
+
+/* Additional for resume_form.html */
+.form-group {
+  margin-bottom: 1.2rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #0d6efd;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+textarea {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 1rem;
+  background-color: #f1f7ff;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.submit-btn {
+  background-color: #0d6efd;
+  color: white;
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+  background-color: #0056d2;
+}
+
+.ai-btn {
+  margin-top: 0.5rem;
+  background-color: #e7f3ff;
+  border: 2px solid #0d6efd;
+  color: #0d6efd;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.3s ease;
+}
+
+.ai-btn:hover {
+  background-color: #0d6efd;
+  color: white;
+}
+
+
+.customize-section {
+    max-width: 800px;
+    margin: auto;
+    padding: 2rem;
+    background: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.customize-section label {
+    font-weight: 600;
+    display: block;
+    margin-top: 1rem;
+}
+
+.customize-section select {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 8px;
+    margin-top: 0.25rem;
+    border: 1px solid #ccc;
+}
+
+.preview-btns {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.resume-preview-box {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    border-radius: 12px;
+    background: #fff;
+    border: 2px dashed #007BFF;
+}
+
+.resume-box {
+    padding: 1rem;
+    border: 1px solid #007BFF;
+    border-radius: 12px;
+    background: #fff;
+}
+
+.preview-title {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+textarea {
+  width: 100%;
+  padding: 1em;
+  margin-bottom: 1em;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  resize: vertical;
+  background-color: #f9fbff;
+}
+
+label {
+  font-weight: 600;
+  display: block;
+  margin-top: 1em;
+}
+
+#results ul {
+  list-style-type: "🔸 ";
+  padding-left: 1.5rem;
+  margin-top: 1rem;
+}
+
+#results li {
+  margin-bottom: 0.3em;
+  font-weight: 500;
+  color: #d6336c;
+}
+
+
+.dashboard-container {
+    max-width: 600px;
+    margin: 80px auto;
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 6px 24px rgba(0, 123, 255, 0.1);
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+}
+
+.dashboard-container h1 {
+    font-size: 32px;
+    color: #0d6efd;
+    margin-bottom: 20px;
+}
+
+.dashboard-container p {
+    font-size: 16px;
+    color: #444;
+    margin-bottom: 30px;
+}
+
+.dashboard-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.dashboard-button {
+    background-color: #007bff;
+    color: white;
+    padding: 14px 24px;
+    border: none;
+    border-radius: 12px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+}
+
+.dashboard-button.hovered,
+.dashboard-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.02);
+}

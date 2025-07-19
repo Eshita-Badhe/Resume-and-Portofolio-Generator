@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Resume Preview</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/resume_preview.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Preview Your Resume</h1>
+
+        <div class="resume-container" id="resumeContent">
+            {{ rendered_resume|safe }}
+        </div>
+
+        <div class="action-buttons">
+            <button onclick="downloadPDF()">Download PDF</button>
+            <button onclick="customizeResume()">Customize</button>
+            <button onclick="changeTemplate()">Change Template</button>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/resume_preview.js') }}"></script>
+</body>
+</html>

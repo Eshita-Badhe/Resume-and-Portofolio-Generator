@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Resume & Portfolio Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f7fbff;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 6px 24px rgba(0, 123, 255, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h2 {
+            color: #0d6efd;
+            margin-bottom: 20px;
+        }
+
+        input[type="email"],
+        input[type="password"],
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            outline: none;
+        }
+
+        button[type="submit"],
+        button#captcha {
+            background-color: #0d6efd;
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            margin-top: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover,
+        button#captcha:hover {
+            background-color: #084298;
+        }
+
+        .captcha-block {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
+            gap: 10px;
+        }
+
+        #captchaImage {
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            height: 50px;
+        }
+
+        .inline {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            margin: 1rem 0;
+            color: #333;
+        }
+
+        .checkbox {
+            width: 1rem;
+            height: 1rem;
+            accent-color: #0d6efd;
+        }
+
+        p {
+            font-size: 0.9rem;
+        }
+
+        a {
+            color: #0d6efd;
+            text-decoration: none;
+        }
+
+        .alert {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+        }
+
+        .alert.success { background-color: #d4edda; color: #155724; }
+        .alert.error   { background-color: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <div class="login-container" data-aos="fade-in">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div id="flash-container">
+                    {% for category, message in messages %}
+                        <div class="alert {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <h2>Login to Resume Builder</h2>
+        <form method="POST" action="/login">
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+
+            <div class="captcha-block">
+                <img id="captchaImage" src="/captcha_img" alt="CAPTCHA">
+                <button type="button" id="captcha" onclick="reloadCaptcha()" title="Reload">🔁</button>
+            </div>
+            <input type="text" name="captcha_input" placeholder="Enter CAPTCHA" required>
+
+            <div class="inline">
+                <input type="checkbox" name="remember" class="checkbox">
+                <label for="remember">Remember Me</label>
+            </div>
+
+            <button type="submit">Login</button>
+        </form>
+
+        <p><a href="/reset_pass">Forgot Password?</a></p>
+        <p>Don't have an account? <a href="{{ url_for('register') }}">Register</a></p>
+        
+    </div>
+
+    <script>
+        function reloadCaptcha() {
+            document.getElementById('captchaImage').src = '/captcha_img?' + Date.now();
+        }
+    </script>
+</body>
+</html>

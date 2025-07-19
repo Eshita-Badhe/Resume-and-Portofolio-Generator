@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Resume Optimizer</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script defer src="{{ url_for('static', filename='js/optimize.js') }}"></script>
+</head>
+<body>
+  <div class="container">
+    <h2>🔍 ATS Resume Optimizer</h2>
+    
+    <form id="optimizeForm">
+      <label for="resumeText">Paste Your Resume:</label>
+      <textarea id="resumeText" rows="8" required></textarea>
+
+      <label for="jobDescription">Paste Job Description:</label>
+      <textarea id="jobDescription" rows="8" required></textarea>
+
+      <button type="submit" class="btn">Optimize</button>
+    </form>
+
+    <div id="results" style="display: none;">
+      <h3>🔎 Keywords You Might Be Missing:</h3>
+      <ul id="missingKeywords"></ul>
+    </div>
+  </div>
+</body>
+</html>

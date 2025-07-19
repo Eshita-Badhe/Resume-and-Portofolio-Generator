@@ -1,0 +1,90 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  background-color: #f4f4f4;
+}
+
+.resume-container {
+  display: flex;
+  max-width: 1000px;
+  margin: 20px auto;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.main-section {
+  flex: 3;
+  padding: 40px;
+}
+
+.sidebar {
+  flex: 1;
+  background-color: #0b2a45;
+  color: white;
+  padding: 30px;
+}
+
+.profile-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.profile-pic {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+h1 {
+  font-size: 28px;
+  margin: 10px 0 0;
+}
+
+h3 {
+  font-weight: normal;
+  color: gray;
+  margin: 5px 0;
+}
+
+h2 {
+  font-size: 22px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 5px;
+  margin-top: 30px;
+}
+
+h4 {
+  margin: 10px 0 5px;
+}
+
+.date {
+  font-size: 13px;
+  color: gray;
+}
+
+ul {
+  padding-left: 20px;
+}
+
+.sidebar .section {
+  margin-bottom: 30px;
+}
+
+.sidebar h3 {
+  font-size: 18px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+  color: #f1f1f1;
+}
+
+.sidebar a {
+  color: #b0d0ff;
+  text-decoration: none;
+}
+
+.skills li,
+.languages li {
+  margin-bottom: 8px;
+}

@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Download Your Resume</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="container center">
+    <h2>Your Resume is Ready!</h2>
+    <p>You can now download your resume as a PDF.</p>
+
+    <form action="{{ url_for('resume_download_pdf') }}" method="POST">
+      {% for key, value in data.items() %}
+        <input type="hidden" name="{{ key }}" value="{{ value }}">
+      {% endfor %}
+      <button type="submit" class="btn-primary">Download PDF</button>
+    </form>
+    
+
+    <a href="{{ url_for('dashboard') }}" class="btn-secondary mt-3">Back to Dashboard</a>
+    
+    <script src="{{ url_for('static', filename='js/resume_download.js') }}"></script>
+
+  </div>
+</body>
+</html>

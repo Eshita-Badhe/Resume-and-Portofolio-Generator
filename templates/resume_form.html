@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Resume Generator Form</title>
+ <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script defer src="{{ url_for('static', filename='js/resume_form.js') }}"></script>
+
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">ProResume+</div>
+  </nav>
+
+  <div class="container">
+    <h2 class="heading">Fill Your Resume Details</h2>
+    <form action="templates\resume_preview.html" method="POST">
+      <input type="hidden" name="template" value="{{ template }}">
+      
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" name="name" id="name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" name="email" id="email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="tel" name="phone" id="phone" required>
+      </div>
+
+      <div class="form-group">
+        <label for="skills">Skills (comma-separated)</label>
+        <input type="text" name="skills" id="skills" required>
+      </div>
+
+      <div class="form-group">
+        <label for="experience">Experience</label>
+        <textarea name="experience" id="experience" rows="4"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="education">Education</label>
+        <textarea name="education" id="education" rows="3"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="summary">Professional Summary</label>
+        <textarea name="summary" id="summary" rows="3" placeholder="Click generate for AI-powered summary..."></textarea>
+        <button type="button" class="ai-btn" id="generate-summary">Generate with AI</button>
+      </div>
+
+      <div class="form-group">
+        <button type="submit" class="submit-btn">Generate Resume</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
