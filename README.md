@@ -69,8 +69,36 @@ The current version provides the core functionality, but the real vision lies ah
 - **Templating**: Jinja2 (Flask’s default template engine)
 - **Database**: Flask-SQLAlchemy 
 
-## 📸 Screenshots (Optional)
-_Add preview images or gifs of Portfolio, Resume, and AI customization in action._
+## 📸 UI Screenshots
+
+### 🏠 Landing Page
+![Landing Page](images/1.png)
+
+### 🧠 AI Help Popup
+![AI Help](images/AIhelp.png)
+
+### 🚀 Features Section
+![Features](images/features.png)
+
+### 📝 Portfolio Form
+![Portfolio Form](images/PortfolioForm.png)
+![Portfolio Form - Step 2](images/PortfolioForm2.png)
+
+### 📄 Resume Type Selection
+![Resume Choices](images/resumeChoices.png)
+![Resume Themes](images/resumeThemes.png)
+
+### 🎨 Resume Customization
+![Customization](images/resumeCustomization.png)
+
+### 📥 Resume Download
+![Download](images/resumeDownload.png)
+
+### 📃 Resume Preview
+![Resume Generated](images/resumeGen.png)
+
+### 🛠 Services Page
+![Services](images/sevices.png)
 
 ## 🔁 Workflow Overview
 
