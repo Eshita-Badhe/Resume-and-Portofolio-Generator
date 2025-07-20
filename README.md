@@ -74,8 +74,6 @@ The current version provides the core functionality, but the real vision lies ah
 ### 🏠 Landing Page
 ![Landing Page](images/1.jpg)
 
-### 🧠 AI Help Popup
-![AI Help](images/AIhelp.jpg)
 
 ### 🚀 Features Section
 ![Features](images/features.jpg)
@@ -83,6 +81,9 @@ The current version provides the core functionality, but the real vision lies ah
 ### 📝 Portfolio Form
 ![Portfolio Form](images/PortfolioForm.jpg)
 ![Portfolio Form - Step 2](images/PortfolioForm2.jpg)
+
+### 🧠 AI Help Popup
+![AI Help](images/AIhelp.jpg)
 
 ### 📄 Resume Type Selection
 ![Resume Choices](images/resumeChoices.png)
@@ -98,7 +99,7 @@ The current version provides the core functionality, but the real vision lies ah
 ![Resume Generated](images/resumeGen.png)
 
 ### 🛠 Services Page
-![Services](images/sevices.png)
+![Services](images/sevices.jpg)
 
 ## 🔁 Workflow Overview
 
