@@ -85,6 +85,10 @@ The current version provides the core functionality, but the real vision lies ah
 ### 🧠 AI Help Popup
 ![AI Help](images/AIhelp.jpg)
 
+### 🎨 Portfolio Customization
+![Portfolio Preview](images/PortfolioGenDemo1.jpg)
+![Portfolio Preview](images/PortfolioGenDemo2.jpg)
+
 ### 📄 Resume Type Selection
 ![Resume Choices](images/resumeChoices.png)
 ![Resume Themes](images/resumeThemes.png)
