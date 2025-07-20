@@ -3,8 +3,23 @@ import google.generativeai as genai
 from jinja2 import Environment, FileSystemLoader
 import os
 from datetime import datetime
+from flask import redirect, url_for, session, send_file, flash
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_sqlalchemy import SQLAlchemy
+from ai.ai_resume_utils import generate_resume_content
+import re
+import pdfkit
 
 app = Flask(__name__)
+app.secret_key = 'supersecretkey'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['UPLOAD_FOLDER'] = 'static/uploads'
+db = SQLAlchemy(app)
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    password = db.Column(db.String(200), nullable=False)
 
 
 @app.route('/')
@@ -14,6 +29,10 @@ def home():
 @app.route('/generatePortfolio')
 def generatePortfolio():
     return render_template('portfolioGenerator/userInfoForPortfolio.html')
+
+@app.route('/generateResume')
+def generateResume():
+    return render_template('resumegenerator/resume_form.html')
 
 genai.configure(api_key="AIzaSyBmryOrJNqM2D3U6kL8Z25qsm_G1eScWao")
     
@@ -127,7 +146,7 @@ def getUserDetailsForPortfolio():
         return f"Something went wrong: {str(e)}", 500
 
 
-def generate_portfolio(data, template_file="portfolio_theme1.html", output_file="generated_portfolio.html"):
+def generate_portfolio(data, template_file="portfolio_theme2.html", output_file="generated_portfolio.html"):
     try:
         base_dir = os.path.dirname(os.path.abspath(__file__))
         template_dir = os.path.join(base_dir, "templates", "portfolioGenerator", "themes")
@@ -177,6 +196,94 @@ Only return the code in simple text and not include '```html'
         return jsonify({"updated_code": updated_code})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-    
+
+# Login
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        user = User.query.filter_by(username=request.form.get('username')).first()
+        if user and check_password_hash(user.password, request.form['password']):
+            session['user'] = user.username
+            return render_template('dashboard.html')
+    return render_template('login.html')
+
+# Register
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        # Check if already exists
+        if User.query.filter_by(username=username).first():
+            flash('User already exists.')
+            return render_template('register.html')
+
+        hashed_password = generate_password_hash(password)
+        new_user = User(username=username, password=hashed_password)
+        db.session.add(new_user)
+        db.session.commit()
+
+        flash('Registration successful! Please log in.')
+        return render_template('login.html')
+
+    return render_template('register.html')
+
+
+# Resume Type Selection
+@app.route('/resume-type')
+def resume_type():
+    return render_template('resume_type.html')
+
+
+# Resume Form
+@app.route('/resume_form', methods=['GET', 'POST'])
+def resume_form():
+    if request.method == 'POST':
+        data = request.form.to_dict()
+
+        if request.form.get('autofill'):
+            auto = generate_resume_content(data)
+            data.update(auto)
+
+        return render_template(f'resume_templates/{data["template"]}.html', **data)
+
+    return render_template('resume_form.html')
+
+# Resume Download Page
+@app.route('/resume-download')
+def resume_download_page():
+    data = request.args.to_dict()
+    return render_template('resume_download.html', **data)
+
+# PDF Download
+@app.route('/resume-download-pdf', methods=['POST'])
+def resume_download_pdf():
+    data = request.form.to_dict()
+    rendered = render_template(f"resume_templates/{data['template']}.html", **data)
+
+    pdf_path = os.path.join('static', 'resume.pdf')
+    pdfkit.from_string(rendered, pdf_path)
+
+    return send_file(pdf_path, as_attachment=True)
+
+# Customize Page
+@app.route('/resume-customize')
+def resume_customize():
+    return render_template('resume_customize.html')
+
+# Optimize Page
+@app.route('/resume-optimize')
+def resume_optimize():
+    return render_template('resume_optimize.html')
+
+# Dynamic Template Preview
+@app.route('/resume-template/<template_name>')
+def resume_template(template_name):
+    data = request.args.to_dict()
+    return render_template(f"resume_templates/{template_name}.html", **data)
+
 if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()
     app.run(debug=True)

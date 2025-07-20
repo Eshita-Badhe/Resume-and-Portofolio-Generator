@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>{{ name }} - Creative Resume</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='creative.css') }}" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div class="resume">
+    <!-- Left Column -->
+    <div class="left">
+      <div class="name-box">
+        <h1>{{ name.split()[0] }}<br><span>{{ name.split()[1] }}</span></h1>
+        <h3>{{ title }}</h3>
+      </div>
+
+      <div class="contact-box">
+        <p>📞 {{ phone }}</p>
+        <p>✉️ {{ email }}</p>
+        <p>📍 {{ location }}</p>
+      </div>
+
+      <div class="section">
+        <h2>PROFILE</h2>
+        <p>{{ profile }}</p>
+      </div>
+
+      <div class="section">
+        <h2>EDUCATION</h2>
+        {% for edu in education %}
+          <p>
+            <strong>{{ edu.degree }}</strong><br />
+            {{ edu.institution }}<br />
+            {{ edu.year }}
+          </p>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Right Column -->
+    <div class="right">
+      <div class="profile-img">
+        <img src="{{ url_for('static', filename=profile_image) }}" alt="Profile Photo" />
+      </div>
+
+      <div class="section">
+        <h2>WORK EXPERIENCE</h2>
+        {% for job in experience %}
+          <div class="job">
+            <div class="job-header">
+              <strong>{{ job.role }}</strong> &nbsp;•&nbsp;
+              <span>{{ job.company }} | {{ job.location }} | {{ job.duration }}</span>
+            </div>
+            <ul>
+              {% for task in job.tasks %}
+                <li>➤ {{ task }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endfor %}
+
+        <div style="text-align: right; padding: 20px;">
+          <button id="downloadBtn" style="padding: 10px 20px; background-color: #f59e0b; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            ⬇️ Download as PDF
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script>
+    document.getElementById('downloadBtn').addEventListener('click', () => {
+      const resume = document.querySelector('.resume');
+      html2canvas(resume, { scale: 2 }).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF('p', 'pt', 'a4');
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const imgWidth = pageWidth;
+        const imgHeight = canvas.height * (imgWidth / canvas.width);
+        pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+        pdf.save('Resume.pdf');
+      });
+    });
+  </script>
+</body>
+</html>

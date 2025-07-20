@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Eshita Badhe - Academic Portfolio</title>
+  <title>{{ name }} - Academic Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -139,7 +139,7 @@
 <body>
 
 <header>
-  <h1>Eshita Badhe</h1>
+  <h1>{{ name }}</h1>
   <nav>
     <a href="#bio">Bio</a>
     <a href="#projects">Projects</a>
@@ -152,45 +152,49 @@
 <section class="container">
   <!-- Sidebar -->
   <aside class="sidebar">
-    <img src="" alt="Profile Picture">
-    <h2>Eshita Badhe</h2>
-    <p></p>
-    <p></p>
+    <img src="{{ profile_image }}" alt="Profile Picture">
+    <h2>{{ name }}</h2>
+    <p>{{ title }}</p>
+    <p>{{ organization }}</p>
     <div class="social-icons">
-      <a href=""><i class="fab fa-x-twitter"></i></a>
-      <a href=""><i class="fab fa-instagram"></i></a>
-      <a href=""><i class="fab fa-linkedin"></i></a>
-      <a href=""><i class="fab fa-github"></i></a>
-      <a href=""><i class="fas fa-id-card"></i></a>
+      <a href="{{ twitter }}"><i class="fab fa-x-twitter"></i></a>
+      <a href="{{ instagram }}"><i class="fab fa-instagram"></i></a>
+      <a href="{{ linkedin }}"><i class="fab fa-linkedin"></i></a>
+      <a href="{{ github }}"><i class="fab fa-github"></i></a>
+      <a href="{{ orcid }}"><i class="fas fa-id-card"></i></a>
     </div>
-    <a href=""><button class="download-btn"><i class="fas fa-download"></i> Download CV</button></a>
+    <a href="{{ cv_link }}"><button class="download-btn"><i class="fas fa-download"></i> Download CV</button></a>
   </aside>
 
   <!-- Main Content -->
   <div class="main">
     <div class="section" id="bio">
       <h3>About Me</h3>
-      <p></p>
+      <p>{{ bio }}</p>
     </div>
 
     <div class="section">
       <h3>Interests</h3>
       <ul>
-        
+        {% for interest in interests %}
+          <li>{{ interest }}</li>
+        {% endfor %}
       </ul>
     </div>
 
     <div class="section">
       <h3>Education</h3>
       <ul>
-        
+        {% for edu in education %}
+          <li><strong>{{ edu.degree }}</strong> — {{ edu.institution }}<br>{{ edu.year }}</li>
+        {% endfor %}
       </ul>
     </div>
   </div>
 </section>
 
 <div class="footer">
-  &copy; 2025 Eshita Badhe. All rights reserved.
+  &copy; {{ year }} {{ name }}. All rights reserved.
 </div>
 
 </body>

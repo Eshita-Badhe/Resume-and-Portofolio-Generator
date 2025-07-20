@@ -159,6 +159,8 @@
     <div class="action-buttons">
     <button onclick="copyCode()"><i class="fas fa-copy"></i> Copy Code</button>
     <button onclick="downloadHTML()"><i class="fas fa-download"></i> Download HTML file</button>
+    <hr>
+    <button onclick="generateResume()"><i class="fas fa-copy"></i> Generate Resume </button>
   </div>
   </div>
 
@@ -182,6 +184,7 @@
   </div>
 
   
+  <div id="resumePreview" style="display:none;"></div>
 
   
 </div>
@@ -250,6 +253,58 @@
     a.href = URL.createObjectURL(blob);
     a.download = "portfolio.html";
     a.click();
+  }
+
+  function generateResume() {
+    const name = document.getElementById("name").value || "Your Name";
+    const email = document.getElementById("email").value || "youremail@example.com";
+    const phone = document.getElementById("phone").value || "000-000-0000";
+    const bio = document.getElementById("bio").value || "";
+    const skills = document.querySelectorAll("input[name='skills[]']");
+    const experience = document.querySelectorAll("input[name='experience[]']");
+    const education = document.querySelectorAll("input[name='education[]']");
+    const projects = document.querySelectorAll("input[name='project_title[]']");
+
+    // Creating bullet lists
+    const skillList = Array.from(skills).map(s => `<li>${s.value}</li>`).join("");
+    const experienceList = Array.from(experience).map(e => `<li>${e.value}</li>`).join("");
+    const educationList = Array.from(education).map(e => `<li>${e.value}</li>`).join("");
+    const projectList = Array.from(projects).map(p => `<li>${p.value}</li>`).join("");
+
+    const resumeHTML = `
+      <div style="padding: 20px; font-family: Arial, sans-serif; max-width: 800px; color: #000;">
+        <h1 style="border-bottom: 1px solid #ccc;">${name}</h1>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Phone:</strong> ${phone}</p>
+        <p style="margin-top: 20px;"><strong>Summary:</strong><br>${bio}</p>
+
+        <h2 style="margin-top: 30px;">Skills</h2>
+        <ul>${skillList}</ul>
+
+        <h2 style="margin-top: 30px;">Experience</h2>
+        <ul>${experienceList}</ul>
+
+        <h2 style="margin-top: 30px;">Education</h2>
+        <ul>${educationList}</ul>
+
+        <h2 style="margin-top: 30px;">Projects</h2>
+        <ul>${projectList}</ul>
+      </div>
+    `;
+
+    // Inject into hidden div
+    const resumeDiv = document.getElementById("resumePreview");
+    resumeDiv.innerHTML = resumeHTML;
+    resumeDiv.style.display = "block";
+
+    // Download as PDF
+    html2pdf().set({
+      margin: 0.5,
+      filename: `${name.replace(/\s+/g, '_')}_Resume.pdf`,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    }).from(resumeDiv).save();
   }
 </script>
 </body></html>

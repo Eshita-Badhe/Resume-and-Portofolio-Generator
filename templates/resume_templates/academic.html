@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>{{ name }} - Academic Resume</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/academic.css') }}" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div class="resume-container">
+    <!-- Left Main Section -->
+    <div class="main-section">
+      <div class="profile-header">
+        <img src="{{ profile_img }}" alt="Profile Photo" class="profile-pic" />
+        <h1>{{ name }}</h1>
+        <h3>{{ title }}</h3>
+      </div>
+
+      <section>
+        <h2>Profile</h2>
+        <p>{{ summary }}</p>
+      </section>
+
+      <section>
+        <h2>Employment History</h2>
+        <h4>{{ job1_title }}, {{ job1_institution }}</h4>
+        <p class="date">{{ job1_duration }}</p>
+        <ul>
+          <li>{{ job1_point1 }}</li>
+          <li>{{ job1_point2 }}</li>
+          <li>{{ job1_point3 }}</li>
+        </ul>
+
+        <h4>{{ job2_title }}, {{ job2_institution }}</h4>
+        <p class="date">{{ job2_duration }}</p>
+        <ul>
+          <li>{{ job2_point1 }}</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Education</h2>
+        <p><strong>{{ degree1 }}</strong> – {{ college1 }}<br /><span class="date">{{ duration1 }}</span></p>
+        <p><strong>{{ degree2 }}</strong> – {{ college2 }}<br /><span class="date">{{ duration2 }}</span></p>
+      </section>
+
+      <section>
+        <h2>References</h2>
+        <p>{{ references }}</p>
+      </section>
+    </div>
+
+    <!-- Right Sidebar -->
+    <div class="sidebar">
+      <div class="section">
+        <h3>Details</h3>
+        <p>
+          {{ address }}<br />
+          {{ city_zip }}<br />
+          {{ phone }}<br />
+          <a href="#">{{ email }}</a>
+        </p>
+      </div>
+
+      <div class="section">
+        <h3>Skills</h3>
+        <ul class="skills">
+          <li>{{ skill1 }}</li>
+          <li>{{ skill2 }}</li>
+          <li>{{ skill3 }}</li>
+          <li>{{ skill4 }}</li>
+          <li>{{ skill5 }}</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h3>Languages</h3>
+        <ul class="languages">
+          <li>{{ lang1 }}</li>
+          <li>{{ lang2 }}</li>
+        </ul>
+      </div>
+
+      <div style="text-align: right; padding: 20px;">
+        <button id="downloadBtn" class="no-print" style="padding: 10px 20px; background-color: #222831; color: white; border: none; border-radius: 5px; cursor: pointer;">
+          ⬇️ Download as PDF
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PDF Script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <script>
+    document.getElementById('downloadBtn').addEventListener('click', () => {
+      const resume = document.querySelector('.resume-container');
+
+      html2canvas(resume, { scale: 2 }).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF('p', 'pt', 'a4');
+
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const imgWidth = pageWidth;
+        const imgHeight = canvas.height * (imgWidth / canvas.width);
+
+        pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+        pdf.save('{{ name }}_Academic_Resume.pdf');
+      });
+    });
+  </script>
+</body>
+</html>

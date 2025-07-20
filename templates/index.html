@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Resume & Portfolio Generator</title>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     body {
@@ -12,6 +13,32 @@
       background-color: #f4f8fc;
       color: #333;
     }
+body.dark-mode {
+  background-color: #1e1e1e;
+  color: #f0f0f0;
+}
+
+body.dark-mode header,
+body.dark-mode footer {
+  background: #111;
+  color: #f0f0f0;
+}
+
+body.dark-mode .hero,
+body.dark-mode .feature-card,
+body.dark-mode .service-card {
+  background: #2c2c2c;
+  color: #f0f0f0;
+}
+
+body.dark-mode .hero-buttons button {
+  background: #555;
+}
+
+body.dark-mode nav a {
+  color: #f0f0f0;
+}
+
     header {
       background: #0a3d62;
       color: #fff;
@@ -35,9 +62,16 @@
       align-items: center;
       justify-content: space-between;
       padding: 4rem 2rem;
-      background: #ffffff;
+      
       animation: fadeIn 2s ease;
-    }
+      
+      background: linear-gradient(135deg, #e0ecf8, #f4f8fc);
+  /* or background-image: url('your-image.jpg'); background-size: cover; */
+      border-bottom: 2px solid #d0d0d0;
+      border-radius: 0 0 20px 20px;
+}
+
+    
     .hero-text {
       max-width: 50%;
     }
@@ -57,20 +91,96 @@
       color: white;
       font-size: 1rem;
       cursor: pointer;
+      box-shadow: 0 0 10px rgba(10, 61, 98, 0.2);
       border-radius: 10px;
-      transition: 0.3s;
+      transition: transform 0.3s ease, background-color 0.3s;
+      
     }
     .hero-buttons button:hover {
-      background: #1e5799;
+      
+      transform: scale(1.05);
+    background-color: #1e5799;
     }
     .hero img {
       max-width: 40%;
       border-radius: 15px;
     }
-    section {
-      padding: 3rem 2rem;
-      text-align: center;
+body.dark-mode .hero-buttons button {
+  background: #25a7b8;
+  color: #000;
+  box-shadow: 0 0 10px #00ffc8, 0 0 20px #20ac8d, 0 0 40px #19a184;
+  font-weight: bold;
+  text-shadow: 0 0 5px #000;
+  transition: all 0.3s ease;
+}
+
+body.dark-mode .hero-buttons button:hover {
+  box-shadow: 0 0 20px #4a98c5, 0 0 40px #4196af, 0 0 60px #78cadf;
+  transform: scale(1.05);
+}
+body.dark-mode h2,
+body.dark-mode .hero h2 {
+  color: #c9d4d2; /* Neon green-blue */
+}
+
+#about {
+  background: linear-gradient(to right, #dbefff, #f4f8fc);
+}
+#services {
+  background: linear-gradient(to right, #b7d9ecb9, #2197db);
+}
+#features {
+  background: linear-gradient(to right, #d0e6f6, #ffffff);
+}
+body.dark-mode #about {
+  background: linear-gradient(to right, #1f1f1f, #2e2e2e);
+  color: #f0f0f0bd;
+}
+body.dark-mode #services {
+  background: linear-gradient(to right, #3a3a3a, #4b4b4b);
+  color: #f0f0f0;
+}
+body.dark-mode #features {
+  background: linear-gradient(to right, #2c2c2c, #3d3d3d);
+  color: #f0f0f0bd;
+  text-decoration-color: #63be38;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+#backToTop {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 1000;
+  background-color: #0a3d62;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 24px;
+  padding: 12px 16px;
+  cursor: pointer;
+  display: none;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: opacity 0.3s ease;
+}
+
+#backToTop:hover {
+  background-color: #1e5799;
+}
+
+section {
+  padding: 4rem 2rem;
+  position: relative;
+}
+    section h2 {
+      color: #0a3d62;
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
     }
+
+
     .features, .services {
       display: flex;
       justify-content: space-around;
@@ -94,7 +204,7 @@
       margin-bottom: 1rem;
     }
     footer {
-      background: #0a3d62;
+       background: linear-gradient(to right, #0a3d62, #134e87);
       color: white;
       text-align: center;
       padding: 1rem;
@@ -111,17 +221,23 @@
   </style>
 </head>
 <body>
-  <header>
-    <h1>ProResume+</h1>
-    <nav>
-      <a href="#about">About</a>
-      <a href="#services">Services</a>
-      <a href="#features">Features</a>
-    </nav>
-  </header>
+<header data-aos="fade-down">
+  <h1>ProResume+</h1>
+  <nav>
+    <a href="{{ url_for('login') }}">Get Started</a>
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#features">Features</a>
+  </nav>
+  <button id="theme-toggle" class="theme-btn">
+    🌙 Dark Mode
+  </button>
+</header>
+
 
   <section class="hero">
-    <div class="hero-text">
+    
+    <div class="hero-text" data-aos="fade-right">
       <h2>Create Stunning Resumes & Portfolios</h2>
       <p>Design, customize, and generate professional documents effortlessly with our intuitive platform.</p>
       <div class="hero-buttons">
@@ -129,63 +245,143 @@
         <button onclick="location.href='/generatePortfolio'">Create Portfolio</button>
       </div>
     </div>
-    <img src="https://cdn-icons-png.flaticon.com/512/2306/2306154.png" alt="Resume Portfolio">
+    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Resume Portfolio" style="width:100%; max-width: 300px;border-radius:15px;box-shadow:  0 4px 8px rgba(0,0,0,0.2);">
+ 
+
   </section>
 
-  <section id="about">
+  <section id="about" data-aos="fade-up">
     <h2>About Us</h2>
     <p>We aim to empower job-seekers and professionals by providing tools to showcase their skills through beautiful resumes and portfolios.</p>
   </section>
-
-  <section id="services">
-    <h2>Our Services</h2>
-    <div class="services">
-      <div class="service-card">
-        <i class="fas fa-file-alt"></i>
-        <h3>Resume Generator</h3>
-        <p>Choose from multiple templates and create professional resumes tailored to your industry.</p>
-      </div>
-      <div class="service-card">
-        <i class="fas fa-laptop-code"></i>
-        <h3>Portfolio Builder</h3>
-        <p>Showcase your projects and achievements with elegant portfolio designs.</p>
-      </div>
-      <div class="service-card">
-        <i class="fas fa-palette"></i>
-        <h3>Customization</h3>
-        <p>Pick your own colors, fonts, and layouts to suit your personal style.</p>
-      </div>
+<section id="services">
+  <h2 data-aos="fade-up">Our Services</h2>
+  <div class="services">
+    <div class="service-card" data-aos="zoom-in">
+      <i class="fas fa-file-alt"></i>
+      <h3>Resume Generator</h3>
+      <p>Create ATS-friendly resumes using guided AI forms with theme support and export to PDF.</p>
     </div>
-  </section>
-
-  <section id="features">
-    <h2>Features</h2>
-    <div class="features">
-      <div class="feature-card">
-        <i class="fas fa-magic"></i>
-        <h3>Interactive UI</h3>
-        <p>Engaging and easy-to-use interface for faster workflow.</p>
-      </div>
-      <div class="feature-card">
-        <i class="fas fa-cloud-download-alt"></i>
-        <h3>Instant Download</h3>
-        <p>Generate and download resumes in PDF format instantly.</p>
-      </div>
-      <div class="feature-card">
-        <i class="fas fa-tools"></i>
-        <h3>Live Customization</h3>
-        <p>Preview and edit your design in real-time with live editor tools.</p>
-      </div>
-      <div class="feature-card">
-        <i class="fas fa-lock"></i>
-        <h3>Data Privacy</h3>
-        <p>We ensure all your data remains private and secure.</p>
-      </div>
+    <div class="service-card" data-aos="zoom-in" data-aos-delay="100">
+      <i class="fas fa-laptop-code"></i>
+      <h3>Portfolio Builder</h3>
+      <p>Showcase your work with beautiful, customizable HTML-based portfolios.</p>
     </div>
-  </section>
+    <div class="service-card" data-aos="zoom-in" data-aos-delay="200">
+      <i class="fas fa-magic"></i>
+      <h3>AI-Assisted Customization</h3>
+      <p>Let AI help you write content, personalize summaries, and even edit the code.</p>
+    </div>
+    <div class="service-card" data-aos="zoom-in" data-aos-delay="300">
+      <i class="fas fa-user-lock"></i>
+      <h3>User Dashboard</h3>
+      <p>Login to access a dashboard with saved resumes, portfolios, and customization history.</p>
+    </div>
+    <div class="service-card" data-aos="zoom-in" data-aos-delay="400">
+      <i class="fas fa-code-branch"></i>
+      <h3>Version Control</h3>
+      <p>Track and manage versions like Resume V1, V2 and Portfolio V1, V2 with full edit history.</p>
+    </div>
+    <div class="service-card" data-aos="zoom-in" data-aos-delay="500">
+      <i class="fas fa-globe"></i>
+      <h3>Multi-language Support</h3>
+      <p>Generate resumes and portfolios in any language depending on job requirements.</p>
+    </div>
+    <div class="service-card" data-aos="zoom-in" data-aos-delay="600">
+      <i class="fas fa-paint-brush"></i>
+      <h3>User-defined Themes</h3>
+      <p>Create your own resume/portfolio themes and publish them for others to use.</p>
+    </div>
+    <div class="service-card" data-aos="zoom-in" data-aos-delay="700">
+      <i class="fas fa-search"></i>
+      <h3>AI Scanning Toolbox</h3>
+      <p>AI scans your resume or portfolio and gives personalized suggestions to improve.</p>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <h2 data-aos="fade-up">Features</h2>
+  <div class="features">
+    <div class="feature-card" data-aos="flip-left">
+      <i class="fas fa-magic"></i>
+      <h3>Interactive UI</h3>
+      <p>Engaging and easy-to-use interface for faster workflow.</p>
+    </div>
+    <div class="feature-card" data-aos="flip-left" data-aos-delay="100">
+      <i class="fas fa-cloud-download-alt"></i>
+      <h3>Instant Download</h3>
+      <p>Generate and download resumes and portfolios instantly in HTML or PDF format.</p>
+    </div>
+    <div class="feature-card" data-aos="flip-left" data-aos-delay="200">
+      <i class="fas fa-tools"></i>
+      <h3>Live Customization</h3>
+      <p>Preview and customize content in real-time with smart editing tools.</p>
+    </div>
+    <div class="feature-card" data-aos="flip-left" data-aos-delay="300">
+      <i class="fas fa-lock"></i>
+      <h3>Data Privacy</h3>
+      <p>We ensure all your personal data is private, secure, and never shared.</p>
+    </div>
+    <div class="feature-card" data-aos="flip-left" data-aos-delay="400">
+      <i class="fas fa-user-check"></i>
+      <h3>AI Suggestions</h3>
+      <p>Get personalized writing assistance and content suggestions while filling forms.</p>
+    </div>
+    <div class="feature-card" data-aos="flip-left" data-aos-delay="500">
+      <i class="fas fa-history"></i>
+      <h3>History & Revisions</h3>
+      <p>Track all your previous resumes and portfolio versions with timestamps.</p>
+    </div>
+    <div class="feature-card" data-aos="flip-left" data-aos-delay="600">
+      <i class="fas fa-language"></i>
+      <h3>Language Flexibility</h3>
+      <p>Generate content in your preferred language based on regional job needs.</p>
+    </div>
+    <div class="feature-card" data-aos="flip-left" data-aos-delay="700">
+      <i class="fas fa-share-alt"></i>
+      <h3>Public Theme Sharing</h3>
+      <p>Create and publish your own themes for the community to use and rate.</p>
+    </div>
+  </div>
+</section>
 
   <footer>
     <p>&copy; 2025 ProResume+. All rights reserved.</p>
   </footer>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+ <script>
+    AOS.init({ duration: 1000, once: false });
+
+    // Theme switcher logic
+    const toggleBtn = document.getElementById('theme-toggle');
+    toggleBtn.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      toggleBtn.textContent = document.body.classList.contains('dark-mode') ? '☀️ Light Mode' : '🌙 Dark Mode';
+      AOS.refresh();
+    });
+  </script>
+<!-- Back to Top Button -->
+ <!-- Back to Top Button -->
+<button id="backToTop" title="Go to top">↑</button>
+
+ <script>
+  const backToTop = document.getElementById("backToTop");
+
+  window.onscroll = () => {
+    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+      backToTop.style.display = "block";
+    } else {
+      backToTop.style.display = "none";
+    }
+  };
+
+  backToTop.onclick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+</script>
+
+
+
 </body>
 </html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard | Resume Portfolio Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container" data-aos="fade-up">
+        <h1>Welcome, {{ session['user'] }}!</h1>
+        <p>Select an action to get started.</p>
+        <div class="dashboard-actions">
+            <a href="{{ url_for('resume_type') }}" class="dashboard-button">Create New Resume</a>
+            <a href="{{ url_for('resume_customize') }}" class="dashboard-button">Customize Resume</a>
+            <a href="{{ url_for('resume_optimize') }}" class="dashboard-button">Optimize Resume (ATS)</a>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+    <script>
+        AOS.init();
+    </script>
+</body>
+</html>

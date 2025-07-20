@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>{{ name }} - Creative Resume</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/creative.css') }}" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="resume">
+    <div class="left">
+      <div class="name-box">
+        <h1>{{ name_line1 }}<br><span>{{ name_line2 }}</span></h1>
+        <h3>{{ job_title }}</h3>
+      </div>
+
+      <div class="contact-box">
+        <p>📞 {{ phone }}</p>
+        <p>✉️ {{ email }}</p>
+        <p>📍 {{ location }}</p>
+      </div>
+
+      <div class="section">
+        <h2>PROFILE</h2>
+        <p>{{ profile_summary }}</p>
+      </div>
+
+      <div class="section">
+        <h2>EDUCATION</h2>
+        <p><strong>{{ edu1_title }}</strong><br />{{ edu1_institute }}<br />{{ edu1_year }}</p>
+        <p><strong>{{ edu2_title }}</strong><br />{{ edu2_institute }}<br />{{ edu2_year }}</p>
+      </div>
+    </div>
+
+    <div class="right">
+      <div class="profile-img">
+        <img src="{{ profile_image }}" alt="Profile Photo" />
+      </div>
+
+      <div class="section">
+        <h2>WORK EXPERIENCE</h2>
+
+        <div class="job">
+          <div class="job-header">
+            <strong>{{ job1_title }}</strong> &nbsp;•&nbsp;
+            <span>{{ job1_company }} | {{ job1_location }} | {{ job1_duration }}</span>
+          </div>
+          <ul>
+            <li>➤ {{ job1_point1 }}</li>
+            <li>➤ {{ job1_point2 }}</li>
+            <li>➤ {{ job1_point3 }}</li>
+          </ul>
+        </div>
+
+        <div class="job">
+          <div class="job-header">
+            <strong>{{ job2_title }}</strong> &nbsp;•&nbsp;
+            <span>{{ job2_company }} | {{ job2_location }} | {{ job2_duration }}</span>
+          </div>
+          <ul>
+            <li>➤ {{ job2_point1 }}</li>
+            <li>➤ {{ job2_point2 }}</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="text-align: right; padding: 20px;">
+        <form action="/resume-download-pdf" method="POST">
+          {% for key, value in data.items() %}
+            <input type="hidden" name="{{ key }}" value="{{ value }}">
+          {% endfor %}
+          <input type="hidden" name="template" value="{{ template }}">
+          <button type="submit" style="padding: 10px 20px; background-color: #f59e0b; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            ⬇️ Download as PDF
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>{{ name }} - Government Resume</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='government.css') }}" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="resume">
+    <h1>{{ name }}</h1>
+    <p><strong>Mobile:</strong> {{ phone }} | <strong>Email:</strong> {{ email }}</p>
+    <p><strong>Address:</strong> {{ address }}</p>
+
+    <h2>Career Objective</h2>
+    <p>{{ objective }}</p>
+
+    <h2>Work Experience</h2>
+    <div class="section">
+      <p><strong>{{ job_title }} – {{ department }}</strong> | {{ organization }} | {{ job_years }}</p>
+      <ul>
+        <li>{{ job_point1 }}</li>
+        <li>{{ job_point2 }}</li>
+      </ul>
+    </div>
+
+    <h2>Educational Qualifications</h2>
+    <table>
+      <tr>
+        <th>Degree</th>
+        <th>Institution</th>
+        <th>Board/University</th>
+        <th>Year</th>
+        <th>Percentage</th>
+      </tr>
+      <tr>
+        <td>{{ degree1 }}</td>
+        <td>{{ institution1 }}</td>
+        <td>{{ board1 }}</td>
+        <td>{{ year1 }}</td>
+        <td>{{ percentage1 }}</td>
+      </tr>
+      <tr>
+        <td>{{ degree2 }}</td>
+        <td>{{ institution2 }}</td>
+        <td>{{ board2 }}</td>
+        <td>{{ year2 }}</td>
+        <td>{{ percentage2 }}</td>
+      </tr>
+    </table>
+
+    <h2>Certifications</h2>
+    <ul>
+      <li>{{ cert1 }}</li>
+      <li>{{ cert2 }}</li>
+    </ul>
+
+    <h2>Skills</h2>
+    <ul>
+      <li>{{ skill1 }}</li>
+      <li>{{ skill2 }}</li>
+      <li>{{ skill3 }}</li>
+      <li>{{ skill4 }}</li>
+    </ul>
+
+    <h2>Languages Known</h2>
+    <ul>
+      <li>{{ lang1 }}</li>
+      <li>{{ lang2 }}</li>
+      <li>{{ lang3 }}</li>
+    </ul>
+
+    <h2>Declaration</h2>
+    <p>{{ declaration }}</p>
+    <br />
+    <p><strong>Place:</strong> {{ place }}</p>
+    <p><strong>Date:</strong> {{ date }}</p>
+    <p><strong>Signature:</strong> ____________________</p>
+
+    <div style="text-align: right; margin: 20px 30px 0;">
+      <button id="downloadBtn" style="
+        padding: 10px 18px;
+        background-color: #004225;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+      ">
+        ⬇️ Download as PDF
+      </button>
+    </div>
+  </div>
+
+  <!-- jsPDF & html2canvas -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script>
+    document.getElementById('downloadBtn').addEventListener('click', () => {
+      const resume = document.querySelector('.resume');
+      html2canvas(resume, { scale: 2 }).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF('p', 'pt', 'a4');
+        const imgProps = pdf.getImageProperties(imgData);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        pdf.save('{{ name }}_Government_Resume.pdf');
+        alert("✅ PDF downloaded successfully!");
+      });
+    });
+  </script>
+</body>
+</html>

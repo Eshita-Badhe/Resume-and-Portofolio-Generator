@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>{{ name }} - Resume</title>
+ <link rel="stylesheet" href="{{ url_for('static', filename='css/basic_resume.css') }}" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="resume">
+    <div class="left-column">
+      <h1>{{ name }}</h1>
+      <h3>{{ title }}</h3>
+      <div class="section">
+        <h2>About Me</h2>
+        <p>{{ about }}</p>
+      </div>
+
+      <div class="section">
+        <h2>Experience</h2>
+        <p><strong>{{ job1_title }}</strong> - {{ job1_years }}<br>{{ job1_place }}</p>
+        <p><strong>{{ job2_title }}</strong> - {{ job2_years }}<br>{{ job2_place }}</p>
+      </div>
+
+      <div class="section">
+        <h2>Skills</h2>
+        <ul>
+          <li>{{ skill1 }}</li>
+          <li>{{ skill2 }}</li>
+          <li>{{ skill3 }}</li>
+          <li>{{ skill4 }}</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h2>Training</h2>
+        <p>{{ training_title }}<br>{{ training_org }} – {{ training_year }}</p>
+      </div>
+    </div>
+
+    <div class="right-column">
+      <img src="{{ profile_img }}" alt="Profile Photo" class="profile-img" />
+
+      <div class="section">
+        <h2>Education</h2>
+        <p>{{ education_year }} – {{ education_level }}<br>{{ education_school }}</p>
+      </div>
+
+      <div class="section">
+        <h2>Awards</h2>
+        <p>{{ award1 }} – {{ award1_year }}<br>{{ award1_desc }}</p>
+        <p>{{ award2 }} – {{ award2_year }}<br>{{ award2_desc }}</p>
+      </div>
+
+      <div class="section">
+        <h2>Volunteering</h2>
+        <p><strong>{{ volunteer1 }}</strong> – {{ volunteer1_year }}<br>{{ volunteer1_desc }}</p>
+        <p><strong>{{ volunteer2 }}</strong> – {{ volunteer2_year }}<br>{{ volunteer2_desc }}</p>
+      </div>
+
+      <div class="section">
+        <h2>Interests</h2>
+        <p>{{ interests }}</p>
+        <p><strong>Driver's Licence:</strong> {{ license_status }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align: center; margin-top: 20px;">
+    <button id="downloadBtn" class="btn">⬇️ Download as PDF</button>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script>
+    document.getElementById('downloadBtn').addEventListener('click', () => {
+      const resume = document.querySelector('.resume');
+      html2canvas(resume, { scale: 2 }).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF('p', 'pt', 'a4');
+        const imgProps = pdf.getImageProperties(imgData);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        pdf.save('{{ name }}_Resume.pdf');
+      });
+    });
+  </script>
+</body>
+</html>

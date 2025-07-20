@@ -104,16 +104,7 @@
 </head>
 <body>
   <div class="container" data-aos="fade-in">
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        <div id="flash-container">
-          {% for category, message in messages %}
-            <div class="alert {{ category }}">{{ message }}</div>
-          {% endfor %}
-        </div>
-      {% endif %}
-    {% endwith %}
-
+ 
     <h2>Create Your Account</h2>
     <form method="POST" action="/register">
       <input type="text" name="f_name" placeholder="First Name" required>
@@ -124,28 +115,10 @@
       <input type="password" name="password" placeholder="Password" required>
       <input type="password" name="confirm_pass" placeholder="Confirm Password" required>
 
-      <select name="theme" required>
-        <option value="general" selected>General</option>
-        <option value="technology">Technology</option>
-        <option value="sports">Sports</option>
-        <option value="business">Business</option>
-        <option value="entertainment">Entertainment</option>
-        <option value="health">Health</option>
-        <option value="science">Science</option>
-        <option value="world">World</option>
-        <option value="politics">Politics</option>
-      </select>
-
-      <div class="captcha-block">
-        <img id="captchaImage" src="/captcha_img" alt="CAPTCHA">
-        <button type="button" id="captcha" onclick="reloadCaptcha()" title="Reload">🔁</button>
-      </div>
-      <input type="text" name="captcha_input" placeholder="Enter CAPTCHA" required>
-
       <button type="submit">Register</button>
     </form>
 
-    <p>Already have an account? <a href="/login_page">Login</a></p>
+    <p>Already have an account? <a href="/login">Login</a></p>
   </div>
 
   <script>
