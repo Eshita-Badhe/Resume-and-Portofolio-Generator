@@ -72,17 +72,17 @@ The current version provides the core functionality, but the real vision lies ah
 ## 📸 UI Screenshots
 
 ### 🏠 Landing Page
-![Landing Page](images/1.png)
+![Landing Page](images/1.jpg)
 
 ### 🧠 AI Help Popup
-![AI Help](images/AIhelp.png)
+![AI Help](images/AIhelp.jpg)
 
 ### 🚀 Features Section
-![Features](images/features.png)
+![Features](images/features.jpg)
 
 ### 📝 Portfolio Form
-![Portfolio Form](images/PortfolioForm.png)
-![Portfolio Form - Step 2](images/PortfolioForm2.png)
+![Portfolio Form](images/PortfolioForm.jpg)
+![Portfolio Form - Step 2](images/PortfolioForm2.jpg)
 
 ### 📄 Resume Type Selection
 ![Resume Choices](images/resumeChoices.png)
