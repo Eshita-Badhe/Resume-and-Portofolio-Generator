@@ -1,9 +1,7 @@
 import openai
 from dotenv import load_dotenv
 import os
-openai.api_key = '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'
-
-
+openai.api_key = ''
 load_dotenv()
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
